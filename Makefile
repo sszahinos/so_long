@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 12:20:40 by sersanch          #+#    #+#              #
-#    Updated: 2023/02/22 13:27:51 by sersanch         ###   ########.fr        #
+#    Updated: 2023/02/22 14:05:16 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,29 +81,25 @@ make_mlx:
 
 clean:
 	@make clean -C $(LBF_DIR)
+	@make clean -C $(FT_PRINTF_DIR)
+	@make clean -C $(GNL_DIR)
+	@make clean -C $(MLX_DIR)
 	@$(RMALL) $(SRC_DIR)/$(OBJ_DIR) $(SRC_DIR)/$(DEP_DIR)
-	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
-	$(YELLOW)objects and dependencies deleted.$(RESET)"
+	@echo "$(CYAN)$(NAME)$(YELLOW) objects and dependencies deleted.$(RESET)"
 
 fclean: clean
-	@make clean_bonus
-	@$(RM) $(SRV_NAME) $(CLI_NAME)
 	@make fclean -C $(LBF_DIR)
-	@echo "$(CYAN)$(SRV_NAME)$(YELLOW) and $(CYAN)$(CLI_NAME) \
-	$(YELLOW)deleted.$(RESET)"
+	@make fclean -C $(FT_PRINTF_DIR)
+	@make fclean -C $(GNL_DIR)
+	@make fclean -C $(MLX_DIR)
+	@$(RM) $(NAME)
+	@echo "$(CYAN)$(NAME)$(YELLOW) deleted.$(RESET)"
 
 re: fclean all
-
-norm:
-	$(NORM)
 
 push:
 	git add *.c Makefile *.h && git commit -m "Functions updated" && git push
 
-folders:
-	@$(MKDIR) $(SRC_DIR)/$(OBJ_DIR)
-	@$(MKDIR) $(SRC_DIR)/$(DEP_DIR)
-
 -include $(SRC_DEP)
 
-.PHONY: all clean fclean re norm make_libft make_gnl make_mlx folders test
+.PHONY: all clean fclean re make_libft make_gnl make_mlx test
