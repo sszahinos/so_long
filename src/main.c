@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 14:08:27 by sersanch          #+#    #+#             */
-/*   Updated: 2023/02/22 14:09:09 by sersanch         ###   ########.fr       */
+/*   Created: 2023/02/22 14:06:57 by sersanch          #+#    #+#             */
+/*   Updated: 2023/02/22 14:24:25 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/so_long.h"
+#include "../include/mlx.h"
 
-#endif
+int	main(int argc, char** argv)
+{
+	argc = 1;
+	argv[0][0] = 'a';
+	return (0);
+}

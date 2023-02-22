@@ -6,7 +6,7 @@
 #    By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 12:20:40 by sersanch          #+#    #+#              #
-#    Updated: 2023/02/22 14:05:16 by sersanch         ###   ########.fr        #
+#    Updated: 2023/02/22 15:01:25 by sersanch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,7 @@ MV		= mv -f
 
 ##### COMPILATION VARIABLES #####
 CFLAGS	= -Wall -Wextra -Werror -MMD
-MLX_LIB = -L. -lmlx -framework OpenGL -framework AppKit
-
+MLX_LIB = -framework OpenGL -framework AppKit
 
 ##### NAMES #####
 NAME			= so_long
@@ -59,9 +58,9 @@ SRC_DEP		= $(SRC_FILES:%.c=%.d)
 
 
 %o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -L  -c $< -o $@
 
-all: make_libft make_ft_printf make_gnl make_mlx $(NAME)
+all: $(NAME) #make_libft make_ft_printf make_gnl make_mlx 
 
 $(NAME): #$(SRC_OBJ) $(INC_DIR)/$(HEADERS)
 	@$(CC) $(SRC_FILES) $(MLX_LIB) -o $(NAME)
@@ -91,7 +90,7 @@ fclean: clean
 	@make fclean -C $(LBF_DIR)
 	@make fclean -C $(FT_PRINTF_DIR)
 	@make fclean -C $(GNL_DIR)
-	@make fclean -C $(MLX_DIR)
+#	@make fclean -C $(MLX_DIR)
 	@$(RM) $(NAME)
 	@echo "$(CYAN)$(NAME)$(YELLOW) deleted.$(RESET)"
 
