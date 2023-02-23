@@ -38,8 +38,9 @@ int	main(int argc, char** argv)
 		ft_printf(MAP_NAME_ERROR);
 	else if (check_map_characters(argv[1]))
 		ft_printf(MAP_CHARS_ERROR);
-	else
-		start_program
+	else if (!map_is_rectangular(argv[1]))
+		ft_printf(MAP_RECTANGULAR_ERROR);
+	start_program
 	argv[0][0] = 'a';
 	return (0);
 }
