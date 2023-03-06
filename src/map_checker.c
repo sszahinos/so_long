@@ -6,10 +6,11 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:51:06 by sersanch          #+#    #+#             */
-/*   Updated: 2023/03/06 18:07:26 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:12:52 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/so_long.h"
 #include <unistd.h>
 
 int	map_get_columns(const char *map_path)
