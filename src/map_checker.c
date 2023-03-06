@@ -6,38 +6,11 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:51:06 by sersanch          #+#    #+#             */
-/*   Updated: 2023/03/06 15:34:56 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:36:44 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
-/* Input: 
- * 	map text
- * Output:
- * 	0 -> map has correct characters
- * 	1 -> map has forbidden characters
- */
-int	check_map_characters(char **map)
-{
-	char	*line;
-	int		i;
-	
-	while (1)
-	{
-		line = get_next_line(map);
-		if (!line)
-			break;
-		i = 0;
-		while (line[i])
-		{
-			if (ft_strchr(ALLOWED_CHARS, line[i]) == -1)
-				return (1);
-			i++;
-		}
-	}
-	return (0);
-}
 
 int	map_get_columns(const char *map_path)
 {
@@ -85,6 +58,31 @@ int map_get_rows(const char *map_path)
 	}
 }
 
+/* Input: 
+ * 	map text
+ * Output:
+ * 	1 -> map has correct characters
+ * 	0 -> map has forbidden characters
+ */
+int	check_map_characters(t_map map)
+{
+	int	*row_col[2];
+
+	row_col[0] = 0;
+	while (row_col[0] < map.rows)
+	{
+		row_col[1] = 0;
+		while (row_col[1] < map.cols)
+		{
+			if (ft_strchr(ALLOWED_CHARS, map.map_arr[row_col[0]][row_col[1]]) == -1)
+				return (-1);
+			row_col[1]++;
+		}
+		row_col[0]++;
+	}
+	return (0);
+}
+
 /* Checks if the path has a rectangular map.
  * Input:
  * 	map path
@@ -125,6 +123,13 @@ int map_is_rectangular(const char *map_path)
 	return (result);
 }
 
+/* Transforms a char* map to t_map.
+ * Input:
+ * 	Map path
+ * Output:
+ * 	-1 -> Error opening the map
+ * 	t_map -> Formatted map
+ */
 t_map *format_map(const char *map_path) //Se asume que se ha controlado que es correcto el mapa
 {
 	int 	map_fd;
@@ -134,24 +139,39 @@ t_map *format_map(const char *map_path) //Se asume que se ha controlado que es c
 	map.rows = map_get_rows(map_path);
 	map.cols = map_get_columns(map_path);
 	map.map_arr = generate_2D_array(map.rows, map.cols);
-	map_fd = open(map_path, O_RDONLY);
-	if (map_fd == -1)
-	{
-		close(map_fd);
-		return (NULL);
-	}
-	while (1)
-	{
-		row = get_next_line(map_fd);
-		if (!row) // free row? controlar que tenga mínimo 5 rows (3x3 interior)?
-		{
-			close(map_fd);
-			return (1);
-		}
-		if (row[cols] != '\n' || row[cols] != '\0')
-			return (0);
-	}
 	return (&map);
+}
+
+/* Input:
+ * 	t_map map
+ * Output:
+ * 	0 -> Not surrounded by walls
+ * 	1 -> Walls are correct.
+ */
+
+int	check_walls(t_map map)
+{
+	int	current_row;
+	int	current_col;
+
+	current_row = 0;
+	while (current_row < map.rows)
+	{
+		if (current_row == 0 || current_row == map.rows) //si la primera o ultima fila es full 1
+		{
+			current_col = 0;
+			while (current_col < map.cols)
+			{
+				if (map.map_arr[current_row][current_col] != ALLOWED_CHARS[1])
+					return (0);
+			}
+			row_col[1]++;
+		}
+		else if (map.map_arr[current_row][0] != ALLOWED_CHARS[1] || map.map_arr[current_row][map.cols] != ALLOWED_CHARS[1])
+			return (0);
+		current_row++;
+	}
+	return (1);
 }
 
 //PONER EN LIBFT
