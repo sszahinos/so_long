@@ -6,7 +6,7 @@
 /*   By: sersanch <sersanch@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:51:06 by sersanch          #+#    #+#             */
-/*   Updated: 2023/03/06 16:36:44 by sersanch         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:07:26 by sersanch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_map_characters(t_map map)
 	return (0);
 }
 
-/* Checks if the path has a rectangular map.
+/* Checks if the path has a rectangular map (min 3*5)
  * Input:
  * 	map path
  * Output:
@@ -109,11 +109,8 @@ int map_is_rectangular(const char *map_path)
 	while (1)
 	{
 		row = get_next_line(map_fd);
-		if (!row && correct_rows >= 5)
-			result = 1;
-		else if ((!row && correct_rows < 5) || (row[cols] != '\n' && row[cols] != '\0'))
+		if ((row[cols] != '\n' && row[cols] != '\0'))
 			result = 0;
-		correct_rows++;
 		if (result != -1)
 			break;
 	}
@@ -185,4 +182,24 @@ char **generate_2D_array(int rows, int cols)
 	while (i < rows)
 		arr_2d[i++] = malloc(sizeof(char) * cols);
 	return (arr_2d);
+}
+
+void	print_map(t_map map)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	col = 0;
+	while (row < map.rows)
+	{
+		col = 0;
+		while (col < map.cols)
+		{
+			ft_printf(map.map_arr[row][col]);
+			col++;
+		}
+		ft_printf("\n");
+		row++;
+	}
 }
